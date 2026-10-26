@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hotel Plaza Mayor — Santo André</title>
+<meta name="description" content="Hotel Plaza Mayor: 87 apartamentos, quatro salões e restaurante no centro de Santo André, região do ABC paulista.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap">
+<style>
+:root{
+  --creme:#EFE8DC;
+  --creme-2:#E6DDCD;
+  --areia:#D6C9B4;
+  --tinta:#1C1613;
+  --tinta-2:#5A4F46;
+  --vermelho:#B01D26;
+  --vinho:#6E1218;
+  --bordo:#420C10;
+  --bordo-2:#320A0D;
+  --latao:#C0A06A;
+  --claro:#F1EAE0;
+  --apagado:#9A8F84;
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --sans:"Jost","Helvetica Neue",Arial,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --pad:clamp(20px,5vw,80px);
+  --max:1440px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--creme);color:var(--tinta);
+  font-family:var(--sans);font-weight:300;font-size:16px;line-height:1.75;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+/* ================= utilitários ================= */
+.wrap{max-width:var(--max);margin:0 auto;padding-inline:var(--pad)}
+.centro{text-align:center}
+.label{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;font-weight:400;color:var(--tinta-2)}
+.label--latao{color:var(--latao)}
+.label--claro{color:rgba(241,234,224,.65)}
+.display{font-family:var(--serif);font-weight:300;line-height:.96;letter-spacing:-.02em}
+/* o estado escondido só existe sob .js-anim, classe que o próprio script põe
+   antes da primeira pintura. sem JS, com erro no script ou com movimento
+   reduzido, a classe não entra e a página aparece inteira. */
+.js-anim .reveal{opacity:0;transform:translateY(28px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.js-anim .reveal.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* as palavras grandes passam da largura da seção de propósito;
+   o clip segura o transbordo sem quebrar o sticky da abertura */
+section:not(.abertura){overflow-x:clip}
+
+.foto{overflow:hidden;position:relative;background:var(--areia)}
+.foto img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease)}
+.foto--corr img{filter:contrast(1.06) saturate(.93) brightness(.97)}
+.foto:hover img{transform:scale(1.04)}
+.foto--sombra{box-shadow:0 30px 70px rgba(28,22,19,.22)}
+
+/* véu para quando houver texto por cima da imagem */
+.foto--veu::after{
+  content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(180deg,rgba(22,8,9,.42),rgba(22,8,9,.3) 45%,rgba(22,8,9,.62));
+}
+.foto--veu-pe::after{
+  content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(180deg,rgba(22,8,9,.1) 40%,rgba(22,8,9,.62));
+}
+
+/* moldura com bloco deslocado atrás */
+.moldura{position:relative;isolation:isolate}
+.moldura::before{
+  content:"";position:absolute;z-index:-1;
+  inset:26px -26px -26px 26px;background:var(--areia);
+}
+.moldura--vermelha::before{background:var(--vermelho)}
+.moldura--latao::before{background:transparent;border:1px solid var(--latao);inset:20px -20px -20px 20px}
+
+.ornamento{width:34px;height:auto;margin:0 auto 26px;display:block;opacity:.85}
+
+.btn{
+  display:inline-block;font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;
+  padding:15px 30px;border:1px solid currentColor;
+  transition:background .5s var(--ease),color .5s var(--ease),border-color .5s var(--ease);
+}
+.btn:hover{background:var(--vermelho);border-color:var(--vermelho);color:#fff}
+.btn--solido{background:var(--vermelho);border-color:var(--vermelho);color:#fff}
+.btn--solido:hover{background:var(--bordo);border-color:var(--bordo)}
+.btn--claro{color:var(--claro);border-color:rgba(241,234,224,.5)}
+
+/* faixas de cor */
+.faixa-vinho{background:var(--vinho);color:var(--claro)}
+.faixa-bordo{background:var(--bordo);color:var(--claro)}
+.faixa-creme2{background:var(--creme-2)}
+.faixa-vinho .label,.faixa-bordo .label{color:rgba(241,234,224,.6)}
+
+/* meta nos cantos (ref. Grand Emily) */
+.cantos{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:clamp(20px,2.6vw,36px)}
+.cantos p{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--tinta-2);opacity:.72}
+.cantos p:nth-child(2){text-align:center}
+.cantos p:nth-child(3){text-align:right}
+.faixa-vinho .cantos p,.faixa-bordo .cantos p{color:rgba(241,234,224,.6)}
+
+/* ================= nav ================= */
+header{
+  position:fixed;inset:0 0 auto 0;z-index:90;
+  padding:20px var(--pad);display:flex;align-items:center;justify-content:space-between;gap:24px;
+  transition:background .6s var(--ease),padding .6s var(--ease),border-color .6s var(--ease);
+  border-bottom:1px solid transparent;mix-blend-mode:normal;
+}
+header.solid{background:rgba(28,18,16,.92);backdrop-filter:blur(16px);padding-block:13px;border-bottom-color:rgba(192,160,106,.22)}
+.marca{transition:opacity .6s var(--ease)}
+.marca img{height:32px;width:auto;transition:height .6s var(--ease)}
+header.solid .marca img{height:26px}
+nav .btn{transition:opacity .6s var(--ease),background .5s var(--ease),color .5s var(--ease),border-color .5s var(--ease)}
+nav{display:flex;align-items:center;gap:32px}
+nav a.item{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--claro);opacity:.82;position:relative;padding-block:4px;transition:opacity .4s}
+nav a.item::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--vermelho);transition:width .5s var(--ease)}
+nav a.item:hover{opacity:1}nav a.item:hover::after{width:100%}
+nav .btn{color:var(--claro);border-color:rgba(241,234,224,.45);padding:12px 24px}
+/* durante a abertura o cabeçalho some inteiro, no celular e no computador */
+header:not(.entrou) .marca,
+header:not(.entrou) nav .btn,
+header:not(.entrou) nav a.item{opacity:0;pointer-events:none}
+nav a.item{transition:opacity .6s var(--ease)}
+.hamb{display:none;padding:8px;transition:opacity .6s var(--ease)}
+header:not(.entrou) .hamb{opacity:0;pointer-events:none}
+.hamb span{display:block;width:26px;height:1px;background:var(--claro);margin:6px 0}
+#menu{
+  position:fixed;inset:0;z-index:88;background:var(--bordo);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  opacity:0;pointer-events:none;transition:opacity .5s var(--ease)
+}
+#menu.aberto{opacity:1;pointer-events:auto}
+#menu a{font-family:var(--serif);font-weight:300;font-size:36px;color:var(--claro);padding:9px}
+
+/* ================= abertura 3D ================= */
+.abertura{height:300vh;position:relative;background:var(--bordo-2)}
+.palco{
+  position:sticky;top:0;height:100svh;overflow:hidden;
+  perspective:1700px;perspective-origin:50% 48%;
+  --p:0;--rot:0deg;--cs:1.3;--to:0;--do:1;--hint:1;
+}
+.cena{position:absolute;inset:0;z-index:0;transform:scale(var(--cs));will-change:transform}
+.cena img{width:100%;height:100%;object-fit:cover;object-position:center 60%;filter:brightness(.5) contrast(1.14) saturate(.8) sepia(.16)}
+.cena__veu{
+  position:absolute;inset:0;z-index:1;
+  background:
+    radial-gradient(105% 75% at 50% 46%,rgba(28,10,10,0) 0%,rgba(28,10,10,.5) 62%,rgba(24,8,9,.92) 100%),
+    linear-gradient(180deg,rgba(24,8,9,.72) 0%,rgba(24,8,9,0) 30%,rgba(24,8,9,.88) 100%);
+}
+.titulo{
+  position:absolute;z-index:2;inset:auto 0 auto 0;top:50%;translate:0 -50%;
+  text-align:center;padding-inline:var(--pad);
+  opacity:var(--to);transform:scale(calc(.94 + var(--to)*.06));will-change:opacity,transform;
+}
+.titulo h1{font-size:clamp(52px,12.5vw,182px);color:var(--claro);margin-block:20px 0}
+.titulo h1 em{font-style:italic}
+.titulo .sub{max-width:600px;margin:26px auto 0;color:rgba(241,234,224,.76);font-size:clamp(13.5px,1.5vw,16.5px);font-weight:200;line-height:1.9}
+
+/* nada de opacity aqui: opacidade num pai com preserve-3d achata o 3D */
+.portas{position:absolute;inset:0;z-index:5;transform-style:preserve-3d;pointer-events:none}
+.porta{
+  position:absolute;top:-2px;bottom:-2px;width:50.2%;opacity:var(--do);
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,0) 26%,rgba(0,0,0,0) 74%,rgba(0,0,0,.34)),
+    var(--vinho);
+  display:flex;align-items:center;backface-visibility:hidden;will-change:transform;
+}
+.porta::before{ /* moldura interna de latão */
+  content:"";position:absolute;inset:26px;border:1px solid rgba(192,160,106,.42);
+}
+.porta::after{ /* sombreamento que vende o volume */
+  content:"";position:absolute;inset:0;pointer-events:none;
+}
+.porta--e{left:0;transform-origin:left center;transform:rotateY(calc(var(--rot) * -1));justify-content:flex-end}
+.porta--d{right:0;transform-origin:right center;transform:rotateY(var(--rot));justify-content:flex-start}
+.porta--e::after{background:linear-gradient(90deg,rgba(0,0,0,.42),rgba(0,0,0,0) 55%,rgba(255,232,200,.1))}
+.porta--d::after{background:linear-gradient(270deg,rgba(0,0,0,.42),rgba(0,0,0,0) 55%,rgba(255,232,200,.1))}
+.porta__txt{
+  font-family:var(--serif);font-weight:300;color:var(--creme);
+  font-size:clamp(34px,7.5vw,104px);line-height:1;letter-spacing:.02em;
+  padding-inline:clamp(20px,4vw,60px);position:relative;z-index:2;
+}
+.porta--d .porta__txt{font-style:italic}
+.vinco{ /* fio de luz que nasce na juntura */
+  position:absolute;left:50%;top:0;bottom:0;width:2px;z-index:6;translate:-50% 0;
+  background:linear-gradient(180deg,transparent,rgba(255,228,186,.75),transparent);
+  opacity:calc(var(--do) * .9);filter:blur(1px);
+}
+.dica{
+  position:absolute;z-index:7;left:0;right:0;bottom:38px;text-align:center;
+  font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:rgba(241,234,224,.7);
+  opacity:var(--hint);
+}
+.dica i{display:block;width:1px;height:38px;margin:12px auto 0;background:linear-gradient(180deg,rgba(241,234,224,.7),transparent)}
+
+/* ================= reserva ================= */
+.reserva{background:var(--bordo);color:var(--claro);padding-block:clamp(30px,4vw,52px)}
+.reserva__caixa{
+  max-width:1080px;margin:0 auto;padding:clamp(22px,3vw,34px) clamp(18px,3vw,34px);
+  border:1px solid rgba(192,160,106,.4);text-align:center;
+}
+.reserva__titulo{display:block;margin-bottom:clamp(18px,2.4vw,26px);color:var(--latao)}
+.reserva__grid{display:grid;grid-template-columns:1fr 1fr 1fr auto auto;gap:0;align-items:stretch}
+.campo{
+  padding:12px clamp(12px,1.8vw,22px);text-align:center;min-width:0;
+  border-left:1px solid rgba(192,160,106,.22);
+  display:flex;flex-direction:column;justify-content:center;gap:7px;
+}
+.campo:first-child{border-left:0}
+.campo .label{display:block;color:rgba(241,234,224,.62)}
+.campo input,.campo select{
+  width:100%;min-width:0;max-width:100%;background:none;border:0;color:var(--claro);
+  text-align:center;font-family:var(--serif);font-size:clamp(17px,1.9vw,21px);font-weight:400;
+  outline:none;color-scheme:dark;cursor:pointer;
+  -webkit-appearance:none;appearance:none;padding:0;
+}
+.campo input::-webkit-calendar-picker-indicator{filter:invert(1);opacity:.5;cursor:pointer}
+.campo input::-webkit-date-and-time-value{text-align:center}
+.campo select option{background:var(--bordo);color:var(--claro);font-family:var(--sans);font-size:14px}
+.campo--noites b{font-family:var(--serif);font-size:clamp(17px,1.9vw,21px);font-weight:400;color:var(--latao);white-space:nowrap}
+.reserva .btn{
+  align-self:center;margin-left:clamp(12px,1.8vw,24px);white-space:nowrap;
+  border-color:var(--latao);color:var(--claro);
+}
+
+/* ================= boas-vindas ================= */
+.bemvindo{padding-block:clamp(52px,6.5vw,92px)}
+.bemvindo p.texto{
+  max-width:680px;margin:0 auto;font-size:clamp(15px,1.7vw,18.5px);
+  line-height:2.05;color:var(--tinta-2);font-weight:300;
+}
+.bemvindo p.texto b{font-weight:400;color:var(--tinta)}
+
+/* ================= números ================= */
+.numeros{background:var(--vermelho);color:#fff}
+.numeros__grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.num{padding:clamp(38px,5vw,64px) 22px;text-align:center;border-left:1px solid rgba(255,255,255,.18)}
+.num:first-child{border-left:0}
+.num b{display:block;font-family:var(--serif);font-weight:300;font-size:clamp(42px,5.4vw,74px);line-height:1}
+.num b sup{font-size:.4em;font-family:var(--sans);font-weight:300;position:relative;top:-1.2em;opacity:.8}
+.num span{display:block;margin-top:12px;font-size:10px;letter-spacing:.24em;text-transform:uppercase;opacity:.82}
+
+/* ================= o hotel (ref. Grand Emily) ================= */
+.ohotel{padding-block:clamp(52px,6.5vw,92px);position:relative}
+.curvas{position:absolute;inset:0;pointer-events:none;z-index:0}
+.curvas svg{width:100%;height:100%}
+.curvas path{fill:none;stroke:var(--tinta);stroke-width:.7;opacity:.16}
+.curvas--latao path,.curvas--latao circle{fill:none;stroke:var(--latao);stroke-width:.8;opacity:.38}
+.curvas--latao circle{opacity:.28}
+.ohotel .wrap{position:relative;z-index:2}
+.trio{
+  display:grid;grid-template-columns:1fr 1.62fr 1fr;gap:clamp(14px,2.6vw,40px);
+  align-items:center;position:relative;
+}
+/* laterais desencontradas na vertical, para o conjunto não ficar estático */
+.trio__lado{aspect-ratio:3/4}
+.trio__lado img{filter:contrast(1.06) saturate(.9) brightness(.94)}
+.trio__lado:first-child{transform:translateY(clamp(-52px,-4vw,-18px))}
+.trio__lado:last-child{transform:translateY(clamp(18px,4vw,52px))}
+
+/* o título precisa escapar da imagem, então a moldura fica fora do overflow */
+.trio__centro{position:relative;aspect-ratio:4/5}
+.trio__centro .foto{position:absolute;inset:0}
+.trio__centro img{filter:brightness(.4) contrast(1.14) saturate(.62) sepia(.2)}
+.trio__titulo{
+  position:absolute;z-index:3;left:50%;top:50%;translate:-50% -50%;
+  width:158%;text-align:center;pointer-events:none;
+}
+/* mancha escura só atrás do texto, para a leitura não depender da foto */
+.trio__titulo::before{
+  content:"";position:absolute;z-index:-1;left:50%;top:50%;translate:-50% -50%;
+  width:110%;height:190%;
+  background:radial-gradient(58% 50% at 50% 50%,rgba(20,6,7,.72),rgba(20,6,7,.34) 62%,rgba(20,6,7,0) 100%);
+}
+.trio__titulo .label{color:rgba(241,234,224,.72);display:block;margin-bottom:clamp(14px,1.8vw,22px)}
+.trio__titulo h2{
+  font-family:var(--serif);font-weight:300;color:var(--claro);
+  font-size:clamp(34px,6.4vw,98px);line-height:1.02;letter-spacing:-.01em;
+  text-shadow:0 6px 40px rgba(20,6,7,.8);
+}
+.trio__titulo h2 em{font-style:italic;color:var(--creme)}
+.trio__risco{
+  width:clamp(40px,6vw,88px);height:1px;margin:clamp(16px,2vw,26px) auto 0;
+  background:var(--latao);opacity:.8;
+}
+.ohotel__pe{
+  margin:clamp(34px,4.4vw,60px) auto 0;max-width:680px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:clamp(22px,3vw,32px);
+}
+.ohotel__pe p{font-size:15px;line-height:2;color:var(--tinta-2)}
+.ohotel__pe .btn{color:var(--tinta);white-space:nowrap}
+
+/* ================= tiles com palavra sobre imagem ================= */
+.tiles{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.6vw,22px);
+  padding:clamp(30px,4vw,56px) var(--pad) clamp(46px,6vw,84px);
+  max-width:var(--max);margin-inline:auto;
+}
+.tile{position:relative;aspect-ratio:3/4;overflow:hidden;display:block;background:#0C0705}
+.tile img{width:100%;height:100%;object-fit:cover;filter:brightness(.46) contrast(1.1) saturate(.82);transition:transform 1.6s var(--ease),filter 1s var(--ease)}
+.tile::after{ /* escurece o pé, onde fica o texto, e ilumina de leve o centro */
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(70% 55% at 50% 44%,rgba(255,190,120,.12),rgba(255,180,100,0) 70%),
+    linear-gradient(180deg,rgba(18,7,6,.42),rgba(18,7,6,.08) 42%,rgba(18,7,6,.72));
+}
+.tile:hover img{transform:scale(1.07);filter:brightness(.56) contrast(1.1) saturate(.92)}
+/* moldura de latão por dentro, que se abre no hover */
+.tile__moldura{
+  position:absolute;z-index:3;inset:clamp(12px,1.4vw,20px);
+  border:1px solid rgba(192,160,106,.45);pointer-events:none;
+  transition:inset .8s var(--ease),border-color .8s var(--ease);
+}
+.tile:hover .tile__moldura{inset:clamp(8px,1vw,14px);border-color:rgba(192,160,106,.85)}
+.tile__cima{
+  position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-end;text-align:center;
+  padding:clamp(28px,3.4vw,48px) clamp(18px,2vw,28px);
+}
+.tile__n{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--latao);margin-bottom:12px}
+.tile__risco{
+  width:1px;height:clamp(26px,3vw,44px);margin-bottom:clamp(16px,2vw,24px);
+  background:linear-gradient(180deg,transparent,var(--latao));
+  transition:height .8s var(--ease);
+}
+.tile:hover .tile__risco{height:clamp(38px,4.4vw,64px)}
+.tile__cima h3{
+  font-family:var(--serif);font-weight:300;font-size:clamp(30px,4vw,60px);
+  color:var(--claro);line-height:1;letter-spacing:-.01em;
+}
+.tile__ver{
+  margin-top:clamp(12px,1.4vw,18px);font-size:9.5px;letter-spacing:.26em;
+  text-transform:uppercase;color:rgba(241,234,224,.72);position:relative;padding-bottom:6px;
+}
+.tile__ver::after{
+  content:"";position:absolute;left:50%;bottom:0;translate:-50% 0;
+  width:16px;height:1px;background:var(--latao);transition:width .7s var(--ease);
+}
+.tile:hover .tile__ver::after{width:100%}
+
+/* ================= acomodações (carrossel) ================= */
+.acom{padding-block:clamp(52px,6.5vw,92px);position:relative}
+.acom>.wrap,.acom>.trilho,.acom>.carrossel__nav{position:relative;z-index:2}
+.acom__topo{text-align:center;margin-bottom:clamp(30px,3.6vw,52px)}
+.acom__topo h2{font-family:var(--serif);font-weight:300;font-size:clamp(40px,6.4vw,96px);line-height:1;letter-spacing:-.02em;margin-block:16px 20px}
+.acom__topo p{max-width:520px;margin:0 auto;color:rgba(241,234,224,.72);font-size:14.5px;font-weight:200}
+
+.trilho{
+  display:flex;gap:clamp(24px,3.4vw,54px);overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;scroll-behavior:smooth;
+  overscroll-behavior-x:contain;
+  justify-content:safe center;
+  padding:0 max(var(--pad),calc((100% - 1120px)/2)) 40px;
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+.trilho::-webkit-scrollbar{display:none}
+.cartao{flex:0 0 clamp(268px,32vw,420px);scroll-snap-align:center;text-align:center}
+.cartao__foto{position:relative;aspect-ratio:4/5;isolation:isolate}
+.cartao__foto .foto{position:absolute;inset:0}
+.cartao__foto::before{content:"";position:absolute;z-index:-1;inset:22px -22px -22px 22px;border:1px solid rgba(192,160,106,.55)}
+.cartao__foto img{filter:contrast(1.07) saturate(.92) brightness(.95)}
+.cartao__cat{
+  position:absolute;z-index:3;left:50%;bottom:-.34em;translate:-50% 0;width:100%;
+  font-family:var(--serif);font-weight:300;font-size:clamp(30px,3.6vw,56px);
+  line-height:1;color:var(--claro);text-shadow:0 6px 34px rgba(24,8,9,.6);pointer-events:none;
+}
+.cartao__corpo{margin-top:clamp(30px,3.4vw,48px)}
+.cartao__m2{font-family:var(--serif);font-size:clamp(34px,4vw,58px);font-weight:300;color:var(--latao);line-height:1}
+.cartao__m2 sup{font-size:.38em;font-family:var(--sans);position:relative;top:-1.5em}
+.cartao__corpo ul{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-top:20px}
+.cartao__corpo li{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(241,234,224,.72);border:1px solid rgba(192,160,106,.32);padding:6px 11px}
+.carrossel__nav{display:flex;align-items:center;justify-content:center;gap:26px;margin-top:14px}
+.carrossel__nav button{
+  width:52px;height:52px;border:1px solid rgba(192,160,106,.5);border-radius:50%;
+  color:var(--claro);font-size:17px;display:grid;place-items:center;
+  transition:background .45s var(--ease),border-color .45s var(--ease);
+}
+.carrossel__nav button:hover{background:var(--vermelho);border-color:var(--vermelho)}
+.contador{font-family:var(--serif);font-size:19px;color:rgba(241,234,224,.8);letter-spacing:.08em;min-width:78px;text-align:center}
+
+/* ================= salão nobre ================= */
+.nobre{position:relative;padding-block:clamp(56px,7vw,100px);background:var(--bordo)}
+.nobre__fundo{position:absolute;inset:0;z-index:0;opacity:.42}
+.nobre__fundo img{width:100%;height:100%;object-fit:cover;filter:brightness(.4) contrast(1.2) saturate(.5) sepia(.3)}
+.nobre__fundo::after{content:"";position:absolute;inset:0;background:radial-gradient(90% 70% at 50% 50%,rgba(66,12,16,.2),rgba(50,10,13,.95))}
+.nobre .wrap{position:relative;z-index:2}
+.nobre__pilha{position:relative;min-height:min(74vw,560px);margin-bottom:clamp(40px,5vw,70px)}
+.nobre__pilha .foto{position:absolute;box-shadow:0 40px 90px rgba(0,0,0,.55)}
+.nobre__pilha .p1{left:0;top:0;width:64%;aspect-ratio:16/11}
+.nobre__pilha .p2{right:0;bottom:0;width:44%;aspect-ratio:4/5;border:1px solid rgba(192,160,106,.5)}
+.nobre__pilha h2{
+  position:absolute;z-index:4;left:50%;top:50%;translate:-50% -50%;width:120%;
+  text-align:center;font-family:var(--serif);font-weight:300;color:var(--claro);
+  font-size:clamp(42px,8.4vw,132px);line-height:.9;letter-spacing:-.025em;
+  text-shadow:0 10px 50px rgba(24,8,9,.65);pointer-events:none;
+}
+.nobre__pilha h2 em{font-style:italic;display:block}
+.nobre__selo{
+  position:absolute;z-index:5;left:50%;bottom:-18px;translate:-50% 0;background:var(--vermelho);color:#fff;
+  padding:13px 24px;font-size:10px;letter-spacing:.24em;text-transform:uppercase;white-space:nowrap;
+}
+.nobre__texto{max-width:620px;margin:0 auto clamp(36px,4vw,56px);text-align:center;color:rgba(241,234,224,.78);font-size:15px;line-height:2;font-weight:200}
+.ficha{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(192,160,106,.34)}
+.ficha div{padding:26px 16px;text-align:center;border-left:1px solid rgba(192,160,106,.18)}
+.ficha div:first-child{border-left:0}
+.ficha dt{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(241,234,224,.6);margin-bottom:10px}
+.ficha dd{font-family:var(--serif);font-size:clamp(22px,2.6vw,34px);font-weight:300;color:var(--claro)}
+
+/* ================= noite: fundo preto com luzes quentes ================= */
+.noite{background:#080605;color:var(--claro);position:relative}
+.noite .label{color:rgba(241,234,224,.6)}
+.luzes{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.luzes i{
+  position:absolute;display:block;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,198,116,.85) 0%,rgba(214,124,44,.32) 45%,rgba(180,90,30,0) 72%);
+  filter:blur(58px);opacity:.42;
+  animation:respira 16s ease-in-out infinite alternate;
+}
+.luzes i:nth-child(1){width:44vw;height:44vw;left:-8%;top:4%;animation-duration:19s}
+.luzes i:nth-child(2){width:36vw;height:36vw;right:-6%;top:34%;animation-duration:23s;animation-delay:-6s;opacity:.34}
+.luzes i:nth-child(3){width:30vw;height:30vw;left:38%;bottom:-10%;animation-duration:27s;animation-delay:-11s;opacity:.3}
+.luzes i:nth-child(4){width:18vw;height:18vw;left:14%;bottom:16%;animation-duration:21s;animation-delay:-3s;opacity:.26;filter:blur(44px)}
+@keyframes respira{
+  from{transform:translate3d(0,0,0) scale(1)}
+  to{transform:translate3d(2.5%,-4%,0) scale(1.16)}
+}
+/* fios verticais finos, para o preto não ficar chapado */
+.fios{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:repeating-linear-gradient(90deg,rgba(192,160,106,.09) 0 1px,transparent 1px 25%);
+}
+.noite .wrap{position:relative;z-index:2}
+
+/* --- salões: uma luz ampla vinda de cima, como lustre de salão --- */
+.noite--salao{background:#070605}
+.noite--salao .luzes i{
+  background:radial-gradient(circle,rgba(255,218,158,.72) 0%,rgba(196,142,74,.22) 46%,rgba(160,100,40,0) 72%);
+}
+.noite--salao .luzes i:nth-child(1){
+  width:86vw;height:36vw;left:7%;top:-16%;filter:blur(90px);opacity:.4;animation-duration:26s;
+}
+.noite--salao .luzes i:nth-child(2){
+  width:30vw;height:30vw;left:-8%;top:auto;right:auto;bottom:4%;opacity:.2;animation-duration:31s;
+}
+.noite--salao .luzes i:nth-child(3){
+  width:26vw;height:26vw;right:-5%;left:auto;top:auto;bottom:12%;opacity:.17;animation-duration:29s;
+}
+.noite--salao .luzes i:nth-child(4){display:none}
+/* fios deitados, o oposto da cozinha */
+.noite--salao .fios{
+  background:repeating-linear-gradient(0deg,rgba(192,160,106,.075) 0 1px,transparent 1px 94px);
+}
+.noite--salao::after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(72% 58% at 50% 40%,rgba(0,0,0,0),rgba(0,0,0,.6) 100%);
+}
+
+/* --- cozinha: mais quente, com bokeh miúdo como o fundo das fotos do bar --- */
+.noite--cozinha{background:#0C0705}
+.noite--cozinha .luzes i{
+  background:radial-gradient(circle,rgba(255,176,86,.9) 0%,rgba(214,104,34,.32) 44%,rgba(180,70,20,0) 72%);
+}
+.bokeh{
+  position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.55;filter:blur(2px);
+  background:
+    radial-gradient(5px 5px at 11% 24%,rgba(255,206,142,.8),transparent 62%),
+    radial-gradient(8px 8px at 23% 71%,rgba(255,184,104,.55),transparent 62%),
+    radial-gradient(4px 4px at 34% 15%,rgba(255,214,158,.7),transparent 62%),
+    radial-gradient(9px 9px at 47% 84%,rgba(255,170,88,.45),transparent 62%),
+    radial-gradient(5px 5px at 58% 31%,rgba(255,198,130,.72),transparent 62%),
+    radial-gradient(7px 7px at 69% 63%,rgba(255,180,96,.5),transparent 62%),
+    radial-gradient(4px 4px at 79% 19%,rgba(255,212,152,.68),transparent 62%),
+    radial-gradient(10px 10px at 88% 77%,rgba(255,166,80,.4),transparent 62%),
+    radial-gradient(5px 5px at 94% 38%,rgba(255,202,136,.6),transparent 62%),
+    radial-gradient(6px 6px at 16% 52%,rgba(255,190,112,.5),transparent 62%);
+  animation:cintila 11s ease-in-out infinite alternate;
+}
+@keyframes cintila{from{opacity:.4}to{opacity:.72}}
+
+/* costura entre as duas noites: um fio que nasce e morre nas pontas */
+.gastro::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:1px;z-index:3;
+  background:linear-gradient(90deg,transparent,rgba(192,160,106,.5) 24%,rgba(192,160,106,.5) 76%,transparent);
+}
+.gastro::after{
+  content:"";position:absolute;left:0;right:0;top:0;height:200px;z-index:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,168,88,.1),rgba(255,168,88,0));
+}
+
+/* --- textura para as seções claras não ficarem chapadas --- */
+.claro-tex{position:relative;isolation:isolate}
+.claro-tex::before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(58% 48% at 16% 10%,rgba(214,201,180,.6),transparent 72%),
+    radial-gradient(52% 46% at 88% 82%,rgba(192,160,106,.24),transparent 74%);
+}
+.claro-tex::after{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:repeating-linear-gradient(90deg,rgba(28,22,19,.045) 0 1px,transparent 1px 25%);
+}
+/* só o conteúdo sobe: .curvas precisa continuar absoluta */
+.claro-tex>.wrap,.claro-tex>.trilho,.claro-tex>.carrossel__nav{position:relative;z-index:2}
+
+/* ================= salões menores ================= */
+.saloes{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,3.4vw,52px)}
+.salao{text-align:center}
+.salao .foto{aspect-ratio:4/3}
+.salao__n{font-family:var(--serif);font-size:14px;color:var(--latao);letter-spacing:.14em;margin-top:30px}
+.salao h3{font-family:var(--serif);font-weight:300;font-size:clamp(26px,2.8vw,40px);margin:6px 0 18px;color:var(--claro)}
+.salao ul{list-style:none;display:flex;flex-direction:column;gap:0;max-width:280px;margin-inline:auto}
+.salao li{display:flex;justify-content:space-between;gap:14px;font-size:12px;letter-spacing:.06em;color:rgba(241,234,224,.6);border-bottom:1px solid rgba(192,160,106,.2);padding:11px 0}
+.salao li b{font-weight:400;color:var(--claro);font-family:var(--serif);font-size:16.5px}
+
+/* ================= gastronomia: cards semi vazados ================= */
+.gastro{padding-block:clamp(52px,6.5vw,92px)}
+.gastro__topo{text-align:center;max-width:640px;margin:0 auto clamp(46px,5.5vw,80px);position:relative;z-index:2}
+.gastro__topo h2{font-family:var(--serif);font-weight:300;font-size:clamp(40px,6.4vw,96px);line-height:1;margin-block:16px 22px}
+.gastro__topo p{color:rgba(241,234,224,.72);font-size:15px;font-weight:200;line-height:1.95}
+
+.pratos{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3.4vw,56px)}
+.prato{text-align:center}
+/* a moldura é vazada: a foto sobe e escapa por cima dela, e o pé fica oco */
+.prato__moldura{
+  position:relative;border:1px solid rgba(192,160,106,.4);
+  margin-top:clamp(34px,4.4vw,62px);
+  padding:0 clamp(14px,1.8vw,24px) clamp(26px,3vw,38px);
+}
+.prato__moldura::after{ /* brilho quente atrás do card, contido para não gerar rolagem */
+  content:"";position:absolute;z-index:-1;inset:10% 0 0 0;
+  background:radial-gradient(70% 55% at 50% 60%,rgba(255,190,110,.18),rgba(255,170,90,0) 74%);
+}
+.prato__foto{margin-top:clamp(-62px,-4.4vw,-34px);aspect-ratio:3/4}
+.prato__foto img{filter:contrast(1.08) saturate(.96)}
+.prato__pe{padding-top:clamp(22px,2.6vw,32px)}
+.prato__n{display:block;font-family:var(--serif);font-size:13px;color:var(--latao);letter-spacing:.16em;margin-bottom:8px}
+.prato__pe h3{font-family:var(--serif);font-weight:300;font-size:clamp(24px,2.8vw,38px);line-height:1.1;color:var(--claro)}
+.prato__hora{
+  display:inline-block;margin-top:14px;font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--latao);border:1px solid rgba(192,160,106,.4);padding:7px 14px;
+}
+.prato__txt{margin-top:16px;font-size:13px;color:rgba(241,234,224,.6);font-weight:200;line-height:1.9}
+
+/* ================= estrutura em fotos ================= */
+.estr{position:relative}
+.estr__faixa{position:relative;margin-bottom:clamp(34px,4.4vw,62px)}
+.estr__faixa .foto{aspect-ratio:21/9}
+.estr__faixa h2{
+  position:absolute;z-index:4;left:50%;top:50%;translate:-50% -50%;width:116%;
+  text-align:center;font-family:var(--serif);font-weight:300;color:var(--claro);
+  font-size:clamp(44px,9vw,142px);line-height:.9;letter-spacing:-.025em;
+  text-shadow:0 10px 50px rgba(24,8,9,.7);pointer-events:none;
+}
+.selo{
+  position:absolute;z-index:5;left:50%;bottom:-17px;translate:-50% 0;
+  background:var(--vermelho);color:#fff;padding:13px 24px;
+  font-size:10px;letter-spacing:.24em;text-transform:uppercase;white-space:nowrap;
+}
+.peca{flex:0 0 clamp(216px,25vw,310px);scroll-snap-align:center;text-align:center}
+/* moldura por dentro, para não gerar rolagem lateral no carrossel */
+.peca__moldura{border:1px solid rgba(192,160,106,.5);padding:clamp(9px,1vw,13px);transition:border-color .5s var(--ease)}
+.peca:hover .peca__moldura{border-color:rgba(192,160,106,.9)}
+.peca .foto{aspect-ratio:4/5}
+.peca__n{display:block;font-family:var(--serif);font-style:italic;font-size:14px;color:var(--latao);margin-top:22px}
+.peca h3{font-family:var(--serif);font-weight:300;font-size:clamp(21px,2.2vw,29px);margin:4px 0 6px}
+.peca p{font-size:12.5px;color:var(--tinta-2);font-weight:200}
+/* ficha em fios, emprestada do Salão Nobre, em versão clara */
+.ficha--claro{border-top-color:rgba(28,22,19,.22);margin-top:clamp(38px,4.6vw,64px)}
+.ficha--claro div{border-left-color:rgba(28,22,19,.14)}
+.ficha--claro dt{color:var(--tinta-2)}
+.ficha--claro dd{color:var(--tinta)}
+.ficha--claro div:nth-child(-n+2){border-bottom-color:rgba(28,22,19,.14)}
+.nav-claro .carrossel__nav button{border-color:rgba(28,22,19,.3);color:var(--tinta)}
+.nav-claro .carrossel__nav button:hover{color:#fff}
+.nav-claro .contador{color:var(--tinta-2)}
+
+/* ================= mapa desenhado ================= */
+.mapa{margin-top:clamp(40px,5vw,68px);border:1px solid rgba(28,22,19,.18);background:#14100F;position:relative}
+.mapa svg{display:block;width:100%;height:auto}
+.mapa__nota{
+  position:absolute;right:14px;bottom:12px;font-size:9px;letter-spacing:.18em;
+  text-transform:uppercase;color:rgba(241,234,224,.35);
+}
+
+/* ================= localização ================= */
+.local{padding-block:clamp(52px,6.5vw,92px);text-align:center}
+.local h2{font-family:var(--serif);font-weight:300;font-size:clamp(38px,6vw,88px);line-height:1;letter-spacing:-.02em;margin-block:16px 26px}
+.local .end{font-family:var(--serif);font-size:clamp(20px,2.3vw,30px);font-weight:300;line-height:1.55;margin-bottom:34px}
+.contatos{display:flex;justify-content:center;flex-wrap:wrap;gap:0;max-width:900px;margin:0 auto 40px;border-top:1px solid rgba(28,22,19,.16)}
+.contatos a{flex:1 1 240px;padding:22px 18px;border-bottom:1px solid rgba(28,22,19,.12);border-left:1px solid rgba(28,22,19,.12);transition:color .4s}
+.contatos a:first-child{border-left:0}
+.contatos a:hover{color:var(--vermelho)}
+.contatos span{display:block}
+.contatos span:first-child{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--tinta-2);margin-bottom:7px}
+.contatos span:last-child{font-family:var(--serif);font-size:19px}
+.local__faixa{margin-top:clamp(50px,7vw,90px);display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px}
+.local__faixa .foto{aspect-ratio:3/2}
+
+/* ================= rodapé ================= */
+footer{background:var(--bordo);color:var(--claro);padding-block:clamp(56px,7vw,90px) 32px}
+.rodape{display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(30px,4vw,52px);align-items:start;text-align:center}
+.rodape img{height:38px;width:auto;margin:0 auto 18px}
+.rodape p{font-size:13px;color:rgba(241,234,224,.62);font-weight:200;line-height:1.9;max-width:300px;margin-inline:auto}
+.rodape h4{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--latao);margin-bottom:16px;font-weight:400}
+.rodape ul{list-style:none;display:flex;flex-direction:column;gap:9px;align-items:center}
+.rodape ul a{font-size:13px;color:rgba(241,234,224,.62);transition:color .4s}
+.rodape ul a:hover{color:var(--claro)}
+.creditos{
+  margin-top:clamp(40px,6vw,70px);padding-top:24px;border-top:1px solid rgba(192,160,106,.2);
+  display:flex;justify-content:center;gap:8px 28px;flex-wrap:wrap;text-align:center;
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(241,234,224,.42);
+}
+
+/* ================= responsivo ================= */
+@media(max-width:1080px){
+  nav .item{display:none}
+  .hamb{display:block}
+  nav .btn{padding:11px 18px}
+  .reserva__grid{grid-template-columns:1fr 1fr;gap:4px 0}
+  .campo{border-left:0;padding-block:14px}
+  .campo:nth-child(2),.campo:nth-child(4){border-left:1px solid rgba(192,160,106,.22)}
+  .campo:nth-child(3),.campo:nth-child(4){border-top:1px solid rgba(192,160,106,.22);margin-top:4px;padding-top:18px}
+  .reserva .btn{grid-column:1/-1;margin:18px 0 0;text-align:center}
+  .estrutura{grid-template-columns:repeat(2,1fr)}
+  .estrutura li:nth-child(2n){border-right:0}
+  .estrutura li:nth-child(4n){border-right:1px solid rgba(28,22,19,.12)}
+  .rodape{grid-template-columns:1fr 1fr}
+  .rodape>div:first-child{grid-column:1/-1}
+}
+@media(max-width:760px){
+  .numeros__grid{grid-template-columns:1fr 1fr}
+  .num:nth-child(odd){border-left:0}
+  .num:nth-child(-n+2){border-bottom:1px solid rgba(255,255,255,.18)}
+  .trio{grid-template-columns:1fr 1fr;gap:10px}
+  .trio__centro{grid-column:1/-1;order:-1;aspect-ratio:4/3}
+  .trio__titulo{width:112%}
+  .ficha{grid-template-columns:1fr 1fr}
+  .ficha div:nth-child(odd){border-left:0}
+  .ficha div:nth-child(-n+2){border-bottom:1px solid rgba(192,160,106,.18)}
+  .saloes{grid-template-columns:1fr 1fr;gap:18px}
+  .salao:last-child{grid-column:1/-1;max-width:340px;margin-inline:auto}
+  .gastro__grid{grid-template-columns:repeat(6,1fr)}
+  .gg-a{grid-column:span 3}.gg-c{grid-column:span 3}
+  .gg-b{grid-column:span 6;order:-1}
+  .gg-b .foto{aspect-ratio:4/3}
+  .gg-b__palavra{width:106%}
+  .horarios{grid-template-columns:1fr 1fr}
+  .horarios div:nth-child(3){grid-column:1/-1;border-left:0;border-top:1px solid rgba(192,160,106,.16)}
+  .nobre__pilha .p1{width:76%}
+  .nobre__pilha .p2{width:52%}
+  .local__faixa{grid-template-columns:1fr 1fr}
+  .local__faixa .foto:last-child{grid-column:1/-1;aspect-ratio:16/7}
+  /* section.tiles para vencer o overflow-x:clip aplicado a todas as seções */
+  section.tiles{
+    grid-auto-flow:column;grid-auto-columns:68%;grid-template-columns:none;
+    overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;
+    overscroll-behavior-x:contain;gap:10px;
+    scrollbar-width:none;-ms-overflow-style:none;
+  }
+  .tiles::-webkit-scrollbar{display:none}
+  .tile{scroll-snap-align:center;aspect-ratio:4/5}
+  .abertura{height:250vh}
+
+  /* as laterais do trio voltam ao eixo no celular */
+  .trio__lado:first-child,.trio__lado:last-child{transform:none}
+
+  /* as luzes eram medidas em vw: no celular encolhiam e a seção ficava preta,
+     enquanto a seção fica muito mais alta. aqui elas voltam a cobrir a área. */
+  .noite--salao .luzes i:nth-child(1){
+    width:170vw;height:90vw;left:-35%;top:-2%;filter:blur(64px);opacity:.5;
+  }
+  .noite--salao .luzes i:nth-child(2){
+    width:110vw;height:110vw;left:-40%;bottom:6%;opacity:.3;filter:blur(60px);
+  }
+  .noite--salao .luzes i:nth-child(3){
+    width:100vw;height:100vw;right:-38%;bottom:32%;opacity:.26;filter:blur(60px);
+  }
+  .noite--salao .luzes i:nth-child(4){
+    display:block;width:78vw;height:78vw;left:8%;top:38%;bottom:auto;
+    opacity:.2;filter:blur(56px);
+  }
+  .noite--salao::after{
+    background:radial-gradient(130% 62% at 50% 20%,rgba(0,0,0,0),rgba(0,0,0,.48) 100%);
+  }
+  .noite--salao .fios{
+    background:repeating-linear-gradient(0deg,rgba(192,160,106,.085) 0 1px,transparent 1px 62px);
+  }
+
+  /* os pratos também deslizam */
+  .pratos{
+    grid-auto-flow:column;grid-auto-columns:74%;grid-template-columns:none;
+    overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;
+    overscroll-behavior-x:contain;gap:16px;
+    scrollbar-width:none;-ms-overflow-style:none;padding-bottom:6px;
+  }
+  .pratos::-webkit-scrollbar{display:none}
+  .prato{scroll-snap-align:center}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+  .abertura{height:100svh}
+  .portas{display:none}
+  .palco{--to:1;--cs:1}
+  .trilho{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<script>
+/* liga o estado de animação antes de qualquer pintura */
+(function(){
+  try{
+    if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      document.documentElement.className += ' js-anim';
+    }
+  }catch(e){}
+})();
+</script>
+
+<header id="topo">
+  <a href="#" class="marca"><img src="img/logo-branco.png" alt="Hotel Plaza Mayor"></a>
+  <nav>
+    <a href="#hotel" class="item">O hotel</a>
+    <a href="#acomodacoes" class="item">Acomodações</a>
+    <a href="#eventos" class="item">Eventos</a>
+    <a href="#gastronomia" class="item">Gastronomia</a>
+    <a href="#contato" class="item">Contato</a>
+    <!-- trocar pelo link do motor OmniBees quando o cliente passar o ID do hotel -->
+    <a href="https://hotelplazamayor.com.br/" target="_blank" rel="noopener" class="btn">Reservar</a>
+    <button class="hamb" id="abrirMenu" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
+  </nav>
+</header>
+
+<div id="menu">
+  <a href="#hotel">O hotel</a>
+  <a href="#acomodacoes">Acomodações</a>
+  <a href="#eventos">Eventos</a>
+  <a href="#gastronomia">Gastronomia</a>
+  <a href="#contato">Contato</a>
+</div>
+
+<!-- ============ ABERTURA 3D ============ -->
+<section class="abertura" id="abertura">
+  <div class="palco" id="palco">
+    <div class="cena"><img src="img/recepcao-140.jpg" alt="Recepção do Hotel Plaza Mayor"></div>
+    <div class="cena__veu"></div>
+
+    <div class="titulo">
+      <p class="label label--claro">Santo André &nbsp;·&nbsp; São Paulo</p>
+      <h1 class="display">Plaza <em>Mayor</em></h1>
+      <p class="sub">Oitenta e sete apartamentos no centro do ABC. Um salão de trezentos e noventa e um metros com pé-direito de cinco. E um café da manhã que começa às seis.</p>
+    </div>
+
+    <div class="portas">
+      <div class="porta porta--e"><span class="porta__txt">Plaza</span></div>
+      <div class="porta porta--d"><span class="porta__txt">Mayor</span></div>
+    </div>
+    <div class="vinco"></div>
+
+    <div class="dica">Role para entrar<i></i></div>
+  </div>
+</section>
+
+<!-- ============ RESERVA ============ -->
+<section class="reserva">
+  <div class="wrap">
+    <div class="reserva__caixa">
+      <span class="label reserva__titulo">Reserve sua estadia</span>
+      <form class="reserva__grid" onsubmit="return false;">
+        <div class="campo">
+          <label class="label" for="in">Check-in</label>
+          <input type="date" id="in">
+        </div>
+        <div class="campo">
+          <label class="label" for="out">Check-out</label>
+          <input type="date" id="out">
+        </div>
+        <div class="campo">
+          <label class="label" for="h">Hóspedes</label>
+          <select id="h">
+            <option>1 adulto</option><option selected>2 adultos</option>
+            <option>3 adultos</option><option>4 adultos</option><option>Família com crianças</option>
+          </select>
+        </div>
+        <div class="campo campo--noites">
+          <span class="label">Estadia</span>
+          <b id="noites">1 noite</b>
+        </div>
+        <a href="https://hotelplazamayor.com.br/" target="_blank" rel="noopener" class="btn">Ver disponibilidade</a>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOAS-VINDAS ============ -->
+<section class="bemvindo centro">
+  <div class="wrap reveal">
+    <svg class="ornamento" viewBox="0 0 40 40" aria-hidden="true">
+      <path d="M20 2 L23 17 L38 20 L23 23 L20 38 L17 23 L2 20 L17 17 Z" fill="#B01D26" opacity=".9"/>
+    </svg>
+    <p class="texto">
+      Bem-vindo ao <b>Hotel Plaza Mayor</b>. No coração de Santo André, a poucos
+      minutos da Praça do Carmo, o Plaza Mayor recebe quem vem a trabalho e quem
+      vem celebrar. São 87 apartamentos, quatro salões de evento, restaurante e
+      bar — e uma recepção que não fecha, para chegadas em qualquer horário.
+    </p>
+  </div>
+</section>
+
+<!-- ============ NÚMEROS ============ -->
+<section class="numeros">
+  <div class="numeros__grid">
+    <div class="num reveal"><b>87</b><span>Apartamentos</span></div>
+    <div class="num reveal d1"><b>04</b><span>Salões de evento</span></div>
+    <div class="num reveal d2"><b>391<sup>m²</sup></b><span>Maior salão</span></div>
+    <div class="num reveal d3"><b>375</b><span>Convidados</span></div>
+  </div>
+</section>
+
+<!-- ============ O HOTEL ============ -->
+<section class="ohotel" id="hotel">
+  <div class="curvas" aria-hidden="true">
+    <svg viewBox="0 0 1440 700" preserveAspectRatio="none">
+      <path d="M-40 250 C 300 60, 560 120, 720 300 S 1180 640, 1500 380"/>
+      <path d="M-40 430 C 320 620, 620 520, 720 340 S 1160 90, 1500 250"/>
+    </svg>
+  </div>
+
+  <div class="wrap">
+    <div class="cantos reveal">
+      <p>Hotel Plaza Mayor</p>
+      <p>(O hotel)</p>
+      <p>(01) &nbsp; Centro · Santo André</p>
+    </div>
+
+    <div class="trio">
+      <div class="foto trio__lado reveal">
+        <img src="img/recepcao-143.jpg" alt="Hall de mármore do hotel">
+      </div>
+
+      <div class="trio__centro reveal d1">
+        <div class="foto foto--veu"><img src="img/fachada-azul.jpg" alt="Fachada do Hotel Plaza Mayor"></div>
+        <div class="trio__titulo">
+          <span class="label">Rua Coronel Fernando Prestes, 278</span>
+          <h2>Um <em>endereço</em><br>no centro</h2>
+          <div class="trio__risco"></div>
+        </div>
+      </div>
+
+      <div class="foto trio__lado reveal d2">
+        <img src="img/recepcao-142.jpg" alt="Recepção do hotel">
+      </div>
+    </div>
+
+    <div class="ohotel__pe reveal d2">
+      <p>
+        O Plaza Mayor fica na Rua Coronel Fernando Prestes, a poucos minutos da
+        Praça do Carmo e do eixo comercial de Santo André. Quem vem a trabalho
+        chega andando às reuniões. Quem vem para uma festa encontra
+        estacionamento próprio, buffet com cardápio personalizado e um salão
+        que comporta a família inteira — com gerador próprio, para a noite não
+        parar.
+      </p>
+      <a href="#acomodacoes" class="btn">Ver acomodações</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TILES ============ -->
+<section class="tiles reveal">
+  <a href="#acomodacoes" class="tile">
+    <img src="img/apto-luxo-06.jpg" alt="Apartamento do hotel">
+    <span class="tile__moldura"></span>
+    <div class="tile__cima">
+      <span class="tile__n">(01)</span>
+      <span class="tile__risco"></span>
+      <h3>Hospedar</h3>
+      <span class="tile__ver">Acomodações</span>
+    </div>
+  </a>
+  <a href="#eventos" class="tile">
+    <img src="img/nupcias-033.jpg" alt="Suíte preparada para noivos">
+    <span class="tile__moldura"></span>
+    <div class="tile__cima">
+      <span class="tile__n">(02)</span>
+      <span class="tile__risco"></span>
+      <h3>Celebrar</h3>
+      <span class="tile__ver">Eventos</span>
+    </div>
+  </a>
+  <a href="#gastronomia" class="tile">
+    <img src="img/bar-drinks-087.jpg" alt="Balcão do bar">
+    <span class="tile__moldura"></span>
+    <div class="tile__cima">
+      <span class="tile__n">(03)</span>
+      <span class="tile__risco"></span>
+      <h3>Brindar</h3>
+      <span class="tile__ver">Gastronomia</span>
+    </div>
+  </a>
+</section>
+
+<!-- ============ ACOMODAÇÕES ============ -->
+<section class="acom faixa-vinho" id="acomodacoes">
+  <div class="curvas curvas--latao" aria-hidden="true">
+    <svg viewBox="0 0 1440 700" preserveAspectRatio="none">
+      <path d="M-60 176 C 300 40, 700 250, 1010 138 S 1370 20, 1500 96"/>
+      <path d="M-60 560 C 260 470, 520 640, 860 552 S 1290 430, 1500 520"/>
+      <path d="M-60 640 C 300 556, 560 700, 900 620"/>
+      <circle cx="1010" cy="138" r="5"/>
+      <circle cx="860" cy="552" r="5"/>
+    </svg>
+  </div>
+  <div class="wrap">
+    <div class="acom__topo reveal">
+      <p class="label label--latao">Quatro categorias &nbsp;·&nbsp; 87 apartamentos</p>
+      <h2 class="display">Onde dormir</h2>
+      <p>Do compacto ao apartamento de 56 m². Todos com ar-condicionado, frigobar, cofre e wi-fi liberado.</p>
+    </div>
+  </div>
+
+  <div class="trilho" id="trilho">
+    <article class="cartao">
+      <div class="cartao__foto">
+        <div class="foto foto--veu-pe"><img src="img/apto-luxo-03.jpg" alt="Apartamento Luxo"></div>
+        <div class="cartao__cat">Luxo</div>
+      </div>
+      <div class="cartao__corpo">
+        <div class="cartao__m2">56<sup>m²</sup></div>
+        <ul><li>TV a cabo 55"</li><li>Sofá</li><li>Frigobar</li><li>Cofre</li></ul>
+      </div>
+    </article>
+
+    <article class="cartao">
+      <div class="cartao__foto">
+        <div class="foto foto--veu-pe"><img src="img/apto-luxo-06.jpg" alt="Apartamento Luxo Superior"></div>
+        <div class="cartao__cat">Luxo Superior</div>
+      </div>
+      <div class="cartao__corpo">
+        <div class="cartao__m2">55<sup>m²</sup></div>
+        <ul><li>TV a cabo 55"</li><li>Sala de estar</li><li>Frigobar</li><li>Wi-fi</li></ul>
+      </div>
+    </article>
+
+    <article class="cartao">
+      <div class="cartao__foto">
+        <div class="foto foto--veu-pe"><img src="img/apto-casal.jpg" alt="Apartamento Standard"></div>
+        <div class="cartao__cat">Standard</div>
+      </div>
+      <div class="cartao__corpo">
+        <div class="cartao__m2">28<sup>m²</sup></div>
+        <ul><li>Casal ou twin</li><li>TV a cabo 43"</li><li>Frigobar</li><li>Cofre</li></ul>
+      </div>
+    </article>
+
+    <article class="cartao">
+      <div class="cartao__foto">
+        <div class="foto foto--veu-pe"><img src="img/apto-junior.jpg" alt="Apartamento Junior"></div>
+        <div class="cartao__cat">Junior</div>
+      </div>
+      <div class="cartao__corpo">
+        <div class="cartao__m2">22<sup>m²</sup></div>
+        <ul><li>TV 43"</li><li>Frigobar</li><li>Cofre</li><li>Ar-condicionado</li></ul>
+      </div>
+    </article>
+  </div>
+
+  <div class="carrossel__nav">
+    <button id="ant" aria-label="Anterior">&#8592;</button>
+    <span class="contador" id="contador">01 / 04</span>
+    <button id="prox" aria-label="Próximo">&#8594;</button>
+  </div>
+</section>
+
+<!-- ============ SALÃO NOBRE ============ -->
+<section class="nobre" id="eventos">
+  <div class="nobre__fundo"><img src="img/nobre-auditorio.jpg" alt=""></div>
+  <div class="wrap">
+    <div class="cantos reveal">
+      <p>Hotel Plaza Mayor</p>
+      <p>(Eventos)</p>
+      <p>(03) &nbsp; Salão Nobre · 391 m²</p>
+    </div>
+
+    <div class="nobre__pilha reveal">
+      <div class="foto foto--corr foto--veu p1"><img src="img/nobre-1.jpg" alt="Salão Nobre visto do mezanino"></div>
+      <div class="foto foto--corr foto--veu p2"><img src="img/bilbao-banquete.jpg" alt="Salão montado em banquete"></div>
+      <h2>Salão <em>Nobre</em></h2>
+      <div class="nobre__selo">Casamentos · Congressos · Formaturas</div>
+    </div>
+
+    <p class="nobre__texto reveal d1">
+      Trezentos e noventa e um metros quadrados de área útil, cinco metros de
+      pé-direito e mezanino. Comporta 375 convidados em banquete e vira
+      auditório sem perder a altura. Tem gerador próprio — a festa não para
+      se a rua parar.
+    </p>
+
+    <dl class="ficha reveal d2">
+      <div><dt>Área útil</dt><dd>391 m²</dd></div>
+      <div><dt>Pé-direito</dt><dd>5,0 m</dd></div>
+      <div><dt>Capacidade</dt><dd>375</dd></div>
+      <div><dt>Estrutura</dt><dd>Mezanino</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ DEMAIS SALÕES ============ -->
+<section class="bemvindo noite noite--salao">
+  <div class="luzes" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="fios" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="acom__topo centro reveal" style="margin-bottom:clamp(30px,3.6vw,52px)">
+      <p class="label">Mais três opções</p>
+      <h2 class="display" style="font-size:clamp(36px,5.4vw,78px);margin-block:14px 18px;color:var(--claro)">Salões</h2>
+      <p style="max-width:520px;margin:0 auto;color:rgba(241,234,224,.7);font-size:14.5px">
+        Buffet com cardápio personalizado, espaço para cerimônia e recepção,
+        banheiros acessíveis e estacionamento no local.
+      </p>
+    </div>
+
+    <div class="saloes">
+      <article class="salao reveal">
+        <div class="moldura moldura--latao"><div class="foto foto--corr"><img src="img/bilbao-banquete.jpg" alt="Salão Bilbao"></div></div>
+        <p class="salao__n">01</p><h3>Bilbao</h3>
+        <ul><li>Área útil <b>207 m²</b></li><li>Pé-direito <b>3,0 m</b></li><li>Diferencial <b>Palco fixo</b></li></ul>
+      </article>
+      <article class="salao reveal d1">
+        <div class="moldura moldura--latao"><div class="foto foto--corr"><img src="img/malaga.jpg" alt="Salão Málaga"></div></div>
+        <p class="salao__n">02</p><h3>Málaga</h3>
+        <ul><li>Área útil <b>170 m²</b></li><li>Pé-direito <b>3,0 m</b></li><li>Diferencial <b>Coffee privativo</b></li></ul>
+      </article>
+      <article class="salao reveal d2">
+        <div class="moldura moldura--latao"><div class="foto foto--corr"><img src="img/bilbao-vermelho.jpg" alt="Salão Galícia"></div></div>
+        <p class="salao__n">03</p><h3>Galícia</h3>
+        <ul><li>Área útil <b>143 m²</b></li><li>Pé-direito <b>3,0 m</b></li><li>Diferencial <b>Coffee privativo</b></li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GASTRONOMIA ============ -->
+<section class="gastro noite noite--cozinha" id="gastronomia">
+  <div class="luzes" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="fios" aria-hidden="true"></div>
+  <div class="bokeh" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="cantos reveal">
+      <p>Hotel Plaza Mayor</p>
+      <p>(Gastronomia)</p>
+      <p>(04) &nbsp; Restaurante &amp; bar</p>
+    </div>
+
+    <div class="gastro__topo reveal">
+      <p class="label label--latao">Restaurante &amp; bar</p>
+      <h2 class="display">A cozinha fica acesa</h2>
+      <p>Cozinha brasileira à la carte, café da manhã incluso na diária e um bar que abre no fim do dia. O happy hour pode ser fechado para grupos, mediante contratação antecipada.</p>
+    </div>
+
+    <div class="pratos reveal">
+      <article class="prato">
+        <div class="prato__moldura">
+          <div class="foto prato__foto"><img src="img/cafe-manha.jpg" alt="Café da manhã do hotel"></div>
+          <div class="prato__pe">
+            <span class="prato__n">01</span>
+            <h3>Café da manhã</h3>
+            <span class="prato__hora">6h — 10h</span>
+            <p class="prato__txt">Incluso na diária, servido cedo para quem tem reunião às oito.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="prato">
+        <div class="prato__moldura">
+          <div class="foto prato__foto"><img src="img/picanha.jpg" alt="Prato do restaurante"></div>
+          <div class="prato__pe">
+            <span class="prato__n">02</span>
+            <h3>Jantar à la carte</h3>
+            <span class="prato__hora">À noite</span>
+            <p class="prato__txt">Cozinha brasileira, com carnes, peixes e massas no cardápio.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="prato">
+        <div class="prato__moldura">
+          <div class="foto prato__foto"><img src="img/bar-drinks-085.jpg" alt="Caipirinha no balcão do bar"></div>
+          <div class="prato__pe">
+            <span class="prato__n">03</span>
+            <h3>Bar</h3>
+            <span class="prato__hora">19h — 22h</span>
+            <p class="prato__txt">Happy hour disponível para grupos, mediante contratação antecipada.</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ESTRUTURA ============ -->
+<section class="bemvindo nav-claro claro-tex estr">
+  <div class="wrap">
+    <div class="cantos reveal">
+      <p>Hotel Plaza Mayor</p>
+      <p>(Estrutura)</p>
+      <p>(05) &nbsp; O que tem no hotel</p>
+    </div>
+
+    <div class="estr__faixa reveal">
+      <div class="foto foto--corr foto--veu"><img src="img/recepcao-140.jpg" alt="Recepção do Hotel Plaza Mayor"></div>
+      <h2>Estrutura</h2>
+      <div class="selo">Recepção 24 horas</div>
+    </div>
+
+    <p class="nobre__texto reveal d1" style="color:var(--tinta-2)">
+      Recepção que não fecha, academia, salão de jogos, restaurante e
+      estacionamento no local. Wi-fi liberado em todo o prédio, e gerador
+      próprio para os salões — o evento não para se a rua parar.
+    </p>
+  </div>
+
+  <div class="trilho" id="trilhoEst">
+    <article class="peca">
+      <div class="peca__moldura"><div class="foto foto--corr"><img src="img/recepcao-142.jpg" alt="Recepção do hotel"></div></div>
+      <span class="peca__n">(01)</span><h3>Recepção 24h</h3><p>Atendimento a qualquer hora</p>
+    </article>
+    <article class="peca">
+      <div class="peca__moldura"><div class="foto foto--corr"><img src="img/academia.jpg" alt="Academia do hotel"></div></div>
+      <span class="peca__n">(02)</span><h3>Fitness center</h3><p>Academia no próprio prédio</p>
+    </article>
+    <article class="peca">
+      <div class="peca__moldura"><div class="foto foto--corr"><img src="img/salao-jogos.jpg" alt="Salão de jogos"></div></div>
+      <span class="peca__n">(03)</span><h3>Salão de jogos</h3><p>Área de convivência</p>
+    </article>
+    <article class="peca">
+      <div class="peca__moldura"><div class="foto foto--corr"><img src="img/restaurante-018.jpg" alt="Salão do restaurante"></div></div>
+      <span class="peca__n">(04)</span><h3>Restaurante</h3><p>Cozinha brasileira à la carte</p>
+    </article>
+    <article class="peca">
+      <div class="peca__moldura"><div class="foto foto--corr"><img src="img/banheiro.jpg" alt="Banheiro do apartamento"></div></div>
+      <span class="peca__n">(05)</span><h3>Banheiro privativo</h3><p>Em todas as categorias</p>
+    </article>
+    <article class="peca">
+      <div class="peca__moldura"><div class="foto foto--corr"><img src="img/petit-gateau.jpg" alt="Sobremesa do restaurante"></div></div>
+      <span class="peca__n">(06)</span><h3>Room service</h3><p>Serviço de quarto</p>
+    </article>
+    <article class="peca">
+      <div class="peca__moldura"><div class="foto foto--corr"><img src="img/nobre-auditorio-3.jpg" alt="Salão preparado para evento"></div></div>
+      <span class="peca__n">(07)</span><h3>Gerador próprio</h3><p>Energia garantida nos eventos</p>
+    </article>
+  </div>
+
+  <div class="carrossel__nav">
+    <button id="antEst" aria-label="Anterior">&#8592;</button>
+    <span class="contador" id="contadorEst">01 / 07</span>
+    <button id="proxEst" aria-label="Próximo">&#8594;</button>
+  </div>
+
+  <div class="wrap">
+    <dl class="ficha ficha--claro reveal">
+      <div><dt>Recepção</dt><dd>24 horas</dd></div>
+      <div><dt>Wi-fi</dt><dd>Todo o hotel</dd></div>
+      <div><dt>Estacionamento</dt><dd>No local</dd></div>
+      <div><dt>Acessibilidade</dt><dd>Banheiros PCD</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ LOCALIZAÇÃO ============ -->
+<section class="local faixa-creme2 claro-tex" id="contato">
+  <div class="curvas" aria-hidden="true">
+    <svg viewBox="0 0 1440 700" preserveAspectRatio="none">
+      <path d="M-40 520 C 340 300, 700 640, 1040 360 S 1360 120, 1500 210"/>
+      <path d="M-40 300 C 260 500, 640 200, 980 470 S 1300 660, 1500 520"/>
+    </svg>
+  </div>
+  <div class="wrap">
+    <div class="reveal">
+      <p class="label">Onde estamos</p>
+      <h2 class="display">No centro, a pé de tudo</h2>
+      <p class="end">Rua Coronel Fernando Prestes, 278<br>Centro — Santo André, SP · 09020-110</p>
+
+      <div class="contatos">
+        <a href="tel:+551136296900"><span>Telefone</span><span>(11) 3629-6900</span></a>
+        <a href="mailto:faleconosco@hotelplazamayor.com.br"><span>E-mail</span><span>faleconosco@…</span></a>
+        <a href="https://instagram.com/hotelplazamayor" target="_blank" rel="noopener"><span>Instagram</span><span>@hotelplazamayor</span></a>
+      </div>
+
+      <a class="btn btn--solido" href="https://www.google.com/maps/search/?api=1&query=Rua+Coronel+Fernando+Prestes,+278+-+Centro,+Santo+Andr%C3%A9+-+SP,+09020-110" target="_blank" rel="noopener">Abrir no mapa</a>
+    </div>
+
+    <div class="mapa reveal d1">
+      <svg viewBox="0 0 900 460" role="img" aria-label="Mapa do entorno do Hotel Plaza Mayor, no centro de Santo André">
+        <rect width="900" height="460" fill="#14100F"/>
+
+        <!-- quadras -->
+        <g fill="#1E1917">
+          <rect x="30"  y="30"  width="150" height="120" rx="3"/>
+          <rect x="210" y="30"  width="200" height="120" rx="3"/>
+          <rect x="440" y="30"  width="150" height="120" rx="3"/>
+          <rect x="620" y="30"  width="250" height="120" rx="3"/>
+          <rect x="30"  y="255" width="150" height="90"  rx="3"/>
+          <rect x="210" y="255" width="200" height="90"  rx="3"/>
+          <rect x="440" y="255" width="150" height="90"  rx="3"/>
+          <rect x="620" y="255" width="250" height="90"  rx="3"/>
+          <rect x="30"  y="375" width="380" height="60"  rx="3"/>
+          <rect x="440" y="375" width="430" height="60"  rx="3"/>
+        </g>
+
+        <!-- praça -->
+        <rect x="620" y="30" width="250" height="120" rx="3" fill="#1B2419"/>
+        <g fill="#2C3A26">
+          <circle cx="680" cy="72" r="13"/><circle cx="730" cy="108" r="16"/>
+          <circle cx="790" cy="66" r="11"/><circle cx="826" cy="112" r="14"/>
+        </g>
+        <text x="745" y="95" fill="#5E6B52" font-family="Jost, sans-serif" font-size="13"
+              letter-spacing="2.4" text-anchor="middle">PRAÇA DO CARMO</text>
+
+        <!-- ruas transversais -->
+        <g stroke="#0E0B0A" stroke-width="26" stroke-linecap="square">
+          <line x1="195" y1="0" x2="195" y2="460"/>
+          <line x1="425" y1="0" x2="425" y2="460"/>
+          <line x1="605" y1="0" x2="605" y2="460"/>
+          <line x1="0"   y1="360" x2="900" y2="360"/>
+        </g>
+        <g stroke="#2A2321" stroke-width="1" stroke-dasharray="7 9">
+          <line x1="195" y1="0" x2="195" y2="460"/>
+          <line x1="425" y1="0" x2="425" y2="460"/>
+          <line x1="605" y1="0" x2="605" y2="460"/>
+          <line x1="0"   y1="360" x2="900" y2="360"/>
+        </g>
+
+        <!-- a rua do hotel -->
+        <line x1="0" y1="200" x2="900" y2="200" stroke="#0E0B0A" stroke-width="42"/>
+        <line x1="0" y1="200" x2="900" y2="200" stroke="#C0A06A" stroke-width="1" opacity=".45"/>
+        <line x1="0" y1="200" x2="900" y2="200" stroke="#C0A06A" stroke-width="1.5"
+              stroke-dasharray="14 12" opacity=".55"/>
+        <text x="40" y="192" fill="#C0A06A" font-family="Jost, sans-serif" font-size="12"
+              letter-spacing="3.2">R. CORONEL FERNANDO PRESTES</text>
+
+        <!-- nomes das transversais -->
+        <g fill="#6B615A" font-family="Jost, sans-serif" font-size="11" letter-spacing="2.6">
+          <text x="188" y="330" transform="rotate(-90 188 330)">R. DAS FIGUEIRAS</text>
+          <text x="598" y="336" transform="rotate(-90 598 336)">AV. PORTUGAL</text>
+          <text x="40"  y="352">R. SENADOR FLÁQUER</text>
+        </g>
+
+        <!-- o hotel -->
+        <g>
+          <circle cx="466" cy="200" r="46" fill="#B01D26" opacity=".1"/>
+          <circle cx="466" cy="200" r="30" fill="#B01D26" opacity=".18"/>
+          <rect x="440" y="160" width="52" height="40" fill="#B01D26"/>
+          <circle cx="466" cy="200" r="6" fill="#F1EAE0"/>
+          <line x1="466" y1="200" x2="466" y2="248" stroke="#B01D26" stroke-width="1.5"/>
+          <line x1="466" y1="248" x2="560" y2="248" stroke="#B01D26" stroke-width="1.5"/>
+          <text x="570" y="244" fill="#F1EAE0" font-family="Cormorant Garamond, serif"
+                font-size="27" font-weight="300">Hotel Plaza Mayor</text>
+          <text x="570" y="266" fill="#8E837B" font-family="Jost, sans-serif" font-size="11"
+                letter-spacing="2.8">NÚMERO 278</text>
+        </g>
+
+        <!-- norte -->
+        <g transform="translate(852,404)">
+          <line x1="0" y1="16" x2="0" y2="-14" stroke="#6B615A" stroke-width="1"/>
+          <path d="M0 -20 L5 -8 L0 -11 L-5 -8 Z" fill="#C0A06A"/>
+          <text x="0" y="30" fill="#6B615A" font-family="Jost, sans-serif" font-size="10"
+                letter-spacing="2" text-anchor="middle">N</text>
+        </g>
+      </svg>
+      <span class="mapa__nota">Mapa esquemático</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RODAPÉ ============ -->
+<footer>
+  <div class="wrap">
+    <div class="rodape">
+      <div>
+        <img src="img/logo-branco.png" alt="Hotel Plaza Mayor">
+        <p>Hospedagem, gastronomia e eventos no centro de Santo André, região do ABC paulista.</p>
+      </div>
+      <div>
+        <h4>Navegar</h4>
+        <ul>
+          <li><a href="#hotel">O hotel</a></li>
+          <li><a href="#acomodacoes">Acomodações</a></li>
+          <li><a href="#eventos">Eventos</a></li>
+          <li><a href="#gastronomia">Gastronomia</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="tel:+551136296900">(11) 3629-6900</a></li>
+          <li><a href="mailto:faleconosco@hotelplazamayor.com.br">faleconosco@hotelplazamayor.com.br</a></li>
+          <li><a href="https://instagram.com/hotelplazamayor" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://facebook.com/HPMSantoAndre" target="_blank" rel="noopener">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="creditos">
+      <span>© 2026 Hotel Plaza Mayor</span>
+      <span>Rua Coronel Fernando Prestes, 278 — Santo André / SP</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- nav --- */
+  var head = document.getElementById('topo');
+  var btn  = document.getElementById('abrirMenu');
+  var menu = document.getElementById('menu');
+  btn.addEventListener('click', function(){
+    var a = menu.classList.toggle('aberto');
+    btn.setAttribute('aria-expanded', a);
+    document.body.style.overflow = a ? 'hidden' : '';
+  });
+  menu.addEventListener('click', function(e){
+    if(e.target.tagName === 'A'){
+      menu.classList.remove('aberto');
+      btn.setAttribute('aria-expanded', false);
+      document.body.style.overflow = '';
+    }
+  });
+
+  /* --- abertura 3D: as portas do hotel abrindo com o scroll --- */
+  var abertura = document.getElementById('abertura');
+  var palco    = document.getElementById('palco');
+  var travado  = false;
+
+  function clamp(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
+  function faixa(p, a, b){ return clamp((p - a) / (b - a)); }
+
+  function quadro(){
+    travado = false;
+    head.classList.toggle('solid', window.scrollY > 40);
+    if(reduz){ head.classList.add('entrou'); return; }
+
+    var total = abertura.offsetHeight - window.innerHeight;
+    if(total <= 0){ head.classList.add('entrou'); return; }
+    var p = clamp(-abertura.getBoundingClientRect().top / total);
+
+    // no celular o cabeçalho só aparece depois que as portas abrem
+    head.classList.toggle('entrou', p > .62);
+
+    // a maior parte do giro acontece no primeiro terço do scroll
+    var giro = faixa(p, 0, .72);
+    giro = 1 - Math.pow(1 - giro, 2.2);          // desacelera no fim
+    var rev = faixa(p, .30, .78);                 // entrada do título
+
+    palco.style.setProperty('--rot', (giro * 87).toFixed(2) + 'deg');
+    palco.style.setProperty('--cs',  (1.30 - giro * 0.30).toFixed(4));
+    palco.style.setProperty('--to',  rev.toFixed(3));
+    palco.style.setProperty('--do',  (1 - faixa(p, .80, .95)).toFixed(3));
+    palco.style.setProperty('--hint',(1 - faixa(p, 0, .12)).toFixed(3));
+  }
+  function pedirQuadro(){
+    if(travado) return;
+    travado = true;
+    requestAnimationFrame(quadro);
+  }
+  window.addEventListener('scroll', pedirQuadro, {passive:true});
+  window.addEventListener('resize', pedirQuadro);
+  quadro();
+
+  /* --- check-in: datas preenchidas e contagem de noites ao vivo --- */
+  var eIn = document.getElementById('in');
+  var eOut = document.getElementById('out');
+  var eNoites = document.getElementById('noites');
+  if(eIn && eOut && eNoites){
+    var iso = function(d){ return d.toISOString().slice(0,10); };
+    var hoje = new Date(); hoje.setHours(12,0,0,0);
+    var amanha = new Date(hoje); amanha.setDate(amanha.getDate() + 1);
+
+    eIn.min = iso(hoje);
+    if(!eIn.value)  eIn.value  = iso(hoje);
+    if(!eOut.value) eOut.value = iso(amanha);
+
+    var contarNoites = function(){
+      var a = new Date(eIn.value), b = new Date(eOut.value);
+      eOut.min = eIn.value;
+      if(!(a < b)){                       // saída sempre depois da entrada
+        b = new Date(a); b.setDate(b.getDate() + 1);
+        eOut.value = iso(b);
+      }
+      var n = Math.round((b - a) / 86400000);
+      eNoites.textContent = n + (n === 1 ? ' noite' : ' noites');
+    };
+    eIn.addEventListener('change', contarNoites);
+    eOut.addEventListener('change', contarNoites);
+    contarNoites();
+  }
+
+  /* --- carrosséis (acomodações e estrutura) --- */
+  function montarCarrossel(idTrilho, seletorItem, idAnt, idProx, idConta){
+    var trilho = document.getElementById(idTrilho);
+    if(!trilho) return;
+    var itens = trilho.querySelectorAll(seletorItem);
+    var conta = document.getElementById(idConta);
+    var ant   = document.getElementById(idAnt);
+    var prox  = document.getElementById(idProx);
+    if(!itens.length) return;
+
+    var passo = function(){
+      return itens.length > 1
+        ? itens[1].getBoundingClientRect().left - itens[0].getBoundingClientRect().left
+        : trilho.clientWidth;
+    };
+    if(ant)  ant.addEventListener('click', function(){
+      trilho.scrollBy({left:-passo(), behavior: reduz ? 'auto' : 'smooth'});
+    });
+    if(prox) prox.addEventListener('click', function(){
+      trilho.scrollBy({left: passo(), behavior: reduz ? 'auto' : 'smooth'});
+    });
+
+    var t;
+    trilho.addEventListener('scroll', function(){
+      clearTimeout(t);
+      t = setTimeout(function(){
+        var meio = trilho.scrollLeft + trilho.clientWidth / 2;
+        var i = 0, melhor = Infinity;
+        itens.forEach(function(c, k){
+          var d = Math.abs((c.offsetLeft + c.offsetWidth / 2) - meio);
+          if(d < melhor){ melhor = d; i = k; }
+        });
+        if(conta) conta.textContent =
+          ('0' + (i + 1)).slice(-2) + ' / ' + ('0' + itens.length).slice(-2);
+      }, 70);
+    }, {passive:true});
+  }
+  montarCarrossel('trilho',    '.cartao', 'ant',    'prox',    'contador');
+  montarCarrossel('trilhoEst', '.peca',   'antEst', 'proxEst', 'contadorEst');
+
+  /* --- entradas --- */
+  var alvos = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){
+    alvos.forEach(function(el){ el.classList.add('on'); });
+  } else {
+    var obs = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('on'); obs.unobserve(e.target); }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+    alvos.forEach(function(el){ obs.observe(el); });
+
+    /* rede de segurança: nada que já esteja na tela pode ficar invisível */
+    var voltas = 0;
+    var revalida = setInterval(function(){
+      var alto = window.innerHeight;
+      document.querySelectorAll('.reveal:not(.on)').forEach(function(el){
+        if(el.getBoundingClientRect().top < alto) el.classList.add('on');
+      });
+      if(++voltas > 12) clearInterval(revalida);
+    }, 900);
+  }
+})();
+</script>
+</body>
+</html>
